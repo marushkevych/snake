@@ -1,0 +1,24 @@
+{
+  "name": "snake",
+  "version": "0.0.0",
+  "description": "implementation of snake game using game-grid js library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "snake",
+    "game"
+  ],
+  "author": "Andrey Marushkevych",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-connect": "~0.7.1",
+    "grunt-watchify": "~0.1.0"
+  },
+  "dependencies": {
+    "game-grid": "0.0.7",
+    "sound-effect-manager": "~0.0.5"
+  }
+}
