@@ -8,7 +8,7 @@ sound.loadFile('boo.mp3', 'boo');
 
 
 var canvas = document.getElementById("canvas");
-var size = 40;
+var size = 35;
 var speed = 80;
 var view = new grid.GridView(canvas, {size: size, scale: 12});
 var model = new grid.GridModel(size);
@@ -20,15 +20,20 @@ var RIGHT = 39;
 var DOWN = 40;
 var direction = LEFT;
 var snake;
+var score = 0;
 
 var playButton = document.getElementById("play");
 var pauseButton = document.getElementById("pause");
 var newGameButton = document.getElementById("new");
+var scoreElement = document.getElementById("score");
 
 // gane coontrol state machine
 var pausedState = {
     name: 'pausedState',
     display: function() {
+        document.getElementById("gameoverMessage").style.display = "none";
+        document.getElementById("pauseMessage").style.display = "inline";
+        document.getElementById("playMessage").style.display = "none";
         // diaplya play button and score
         pauseButton.style.display = "none";
         newGameButton.style.display = "inline";
@@ -58,6 +63,9 @@ var pausedState = {
 var playingState = {
     name: 'playingState',
     display: function() {
+        document.getElementById("pauseMessage").style.display = "none";
+        document.getElementById("playMessage").style.display = "inline";
+        
         // display score and pause button and new game button
         pauseButton.style.display = "inline";
         newGameButton.style.display = "inline";
@@ -83,6 +91,16 @@ var gameOverState = {
     name: 'gameOverState',
     display: function() {
         // display game over text
+        document.getElementById("gameoverMessage").style.display = "inline";
+        document.getElementById("playMessage").style.display = "none";
+        
+        //clear();
+        var context = canvas.getContext("2d");
+        context.font = "bold 50px sans-serif";
+        context.fillStyle = 'white';
+        context.fillText("Game  Over   :(", 20, 200);
+        context.fillStyle = 'black';
+        
         pauseButton.style.display = "none";
         newGameButton.style.display = "inline";
         playButton.style.display = "none";
@@ -103,7 +121,8 @@ var gameOverState = {
     }
 };
 
-var gameControl = pausedState;
+var gameControl;
+setState(pausedState);
 
 function setState(state) {
     gameControl = state;
@@ -149,13 +168,17 @@ function keydownEventHandler(e) {
 
 }
 
-view.paintBorder();
+view.paintBorder('black');
 setUp();
 
 
 function clear() {
+    var context = canvas.getContext("2d");
+    context.clearRect(20, 160, 400, 50)
     snake = null;
     direction = LEFT;
+    score = 0;
+    scoreElement.innerHTML = "0";
     model.eachCell(function(cell) {
         cell.isSnake = false;
         cell.isFood = false;
@@ -188,7 +211,7 @@ function play() {
         }
         if (next.isFood) {
             sound.play('rocket');
-            //generate next food
+            scoreElement.innerHTML = ++score;
             generateFood();
         }
 
@@ -219,11 +242,14 @@ function getNextCell(head) {
 
 function generateFood() {
     var cell = model.getRandomCell(function(cell){
-        if(cell.isSanke) return false;
+//        console.log('generating food', cell.isSnake, cell.isFood)
+        if(cell.isSnake || cell.isFood) return false;
         return true;
     });
     cell.isFood = true;
+    canvas.getContext("2d").fillStyle = 'red';
     view.fillCell(cell);
+    canvas.getContext("2d").fillStyle = 'black';
 }
 
 

@@ -6,17 +6,28 @@
         <meta name="viewport" content="width=device-width">
     </head>
     <body>
-        <h2>Snake</h2>
-        <div>
+        <div style="width: 400px">
+            <h2 style='margin: 0;float: left;font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans serif;font-size:50px'>Snake</h1>
+            <h2  style="float: right;margin-left: 10px" id="score">0</h2>
+            <h2  style="float: right;">Score: </h2>
+        </div>
+        <div style="clear: both;">
             <button id="pause" style="display:none">PAUSE</button> 
             <button id="play">PLAY</button> &nbsp;
-            <button id="new" >NEW GAME</button>&nbsp;&nbsp;
+            <button id="new" >NEW GAME</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span id="gameoverMessage" style="display:none">
+                <!--<span id="gameoverMessage" style="font: bold 25px sans-serif;">Game over!</span><br>-->
+                <span id="gameoverMessage" style="font: bold 15px sans-serif;">Press ESC to play again</span>
+            </span>
+            <span id="pauseMessage" style="font: bold 15px sans-serif;display:none">Press any key to continue</span>
+            <span id="playMessage" style="font: bold 15px sans-serif;display:none">Press SPACE to pause</span>
         </div>
         <br>
         <div>
-            <canvas id="canvas"  ></canvas>
+            <canvas id="canvas" style="background-color: rgba(158, 167, 184, 0.6);" ></canvas>
         </div>
         
         <script src="js/bundle.js" ></script>
     </body>
 </html>
+

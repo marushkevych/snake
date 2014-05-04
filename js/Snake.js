@@ -7,8 +7,8 @@ module.exports = function(model, view){
     
     function init(){
         // init snake
-        var x = model.size/2;
-        var y = model.size/2;
+        var x = Math.floor(model.size/2);
+        var y = Math.floor(model.size/2);
         for(var i = 0; i < length; i++){
             snake.push(model.getCell(x+i,y));
         }
