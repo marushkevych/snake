@@ -40,7 +40,7 @@ module.exports = function(grunt) {
                     keepalive: true
                 },
                 src: './js/controller.js',
-                dest: 'js/bundle.js'
+                dest: 'bundle.js'
             },
             test: {
                 src: './spec/*Spec.js',
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: './js/controller.js',
-                dest: 'js/bundle.js'
+                dest: 'bundle.js'
             }
             
         },        

@@ -1,31 +1,29 @@
 var grid = require('game-grid');
 var makeSnake = require('./Snake');
 
-var SoundEffectManager = require('sound-effect-manager');
-var sound = new SoundEffectManager();
-sound.loadFile('jump.wav', 'rocket');
-sound.loadFile('boo.mp3', 'boo');
-
-
 var canvas = document.getElementById("canvas");
 var size = 35;
-var speed = 80;
 var view = new grid.GridView(canvas, {size: size, scale: 12});
 var model = new grid.GridModel(size);
-var intervalId;
 
-var LEFT = 37;
-var UP = 38;
-var RIGHT = 39;
-var DOWN = 40;
-var direction = LEFT;
-var snake;
+
 var score = 0;
 
 var playButton = document.getElementById("play");
 var pauseButton = document.getElementById("pause");
 var newGameButton = document.getElementById("new");
 var scoreElement = document.getElementById("score");
+
+// init game engine
+var gameEngine = require('./GameEngine');
+gameEngine.init(canvas);
+gameEngine.setFoodEatenEventListener(function(){
+    scoreElement.innerHTML = ++score;
+});
+gameEngine.setGameOverListener(function(){
+    setState(gameOverState);
+});
+
 
 // gane coontrol state machine
 var pausedState = {
@@ -171,88 +169,8 @@ function keydownEventHandler(e) {
 view.paintBorder('black');
 setUp();
 
-
-function clear() {
-    var context = canvas.getContext("2d");
-    context.clearRect(20, 160, 400, 50)
-    snake = null;
-    direction = LEFT;
+function clear(){
+    gameEngine.clear();
     score = 0;
     scoreElement.innerHTML = "0";
-    model.eachCell(function(cell) {
-        cell.isSnake = false;
-        cell.isFood = false;
-        view.clearCell(cell);
-    });
 }
-
-function pause() {
-
-    clearInterval(intervalId);
-}
-
-function setUp() {
-    snake = makeSnake(model, view);
-    generateFood();
-}
-
-// main loop
-function play() {
-    intervalId = setInterval(tick, speed);
-
-    function tick() {
-        var next = getNextCell(snake.getHead());
-        if (next == null || next.isSnake) {
-            sound.play('boo');
-//            console.log("game over!!!!");
-            pause();
-            setState(gameOverState);
-            return;
-        }
-        if (next.isFood) {
-            sound.play('rocket');
-            scoreElement.innerHTML = ++score;
-            generateFood();
-        }
-
-        snake.move(next);
-    }
-}
-
-
-function getNextCell(head) {
-    switch (direction) {
-        case LEFT:
-            return model.getNextCellLeft(head.x, head.y);
-            break;
-        case UP:
-            return model.getNextCellUp(head.x, head.y);
-            break;
-        case RIGHT:
-            return model.getNextCellRight(head.x, head.y);
-            break;
-        case DOWN:
-            return model.getNextCellDown(head.x, head.y);
-            break;
-    }
-
-
-
-}
-
-function generateFood() {
-    var cell = model.getRandomCell(function(cell){
-//        console.log('generating food', cell.isSnake, cell.isFood)
-        if(cell.isSnake || cell.isFood) return false;
-        return true;
-    });
-    cell.isFood = true;
-    canvas.getContext("2d").fillStyle = 'red';
-    view.fillCell(cell);
-    canvas.getContext("2d").fillStyle = 'black';
-}
-
-
-
-
-    
