@@ -13,7 +13,6 @@ var LEFT = 37;
 var UP = 38;
 var RIGHT = 39;
 var DOWN = 40;
-exports.direction = LEFT;
 
 var gameOverCallback;
 var foodEatenEventCallback;
@@ -21,6 +20,8 @@ var canvas;
 
 var model;
 var view;
+
+exports.direction = LEFT;
 
 exports.init = function(canvasElement, size){
     canvas = canvasElement;
@@ -43,8 +44,6 @@ exports.setUp = function() {
     generateFood();
 };
 
-
-
 // main loop
 exports.play = function() {
     intervalId = setInterval(tick, 80);
@@ -54,7 +53,6 @@ exports.play = function() {
         var next = getNextCell(snake.getHead(), self.direction);
         if (next == null || next.isSnake) {
             sound.play('boo');
-            console.log("game over!!!!");
             self.pause();
             gameOverCallback();
             return;
@@ -83,7 +81,7 @@ exports.clear = function() {
         cell.isFood = false;
         view.clearCell(cell);
     });
-}
+};
 
 function getNextCell(head, direction) {
     switch (direction) {
@@ -106,7 +104,6 @@ function getNextCell(head, direction) {
 
 function generateFood() {
     var cell = model.getRandomCell(function(cell){
-//        console.log('generating food', cell.isSnake, cell.isFood)
         if(cell.isSnake || cell.isFood) return false;
         return true;
     });

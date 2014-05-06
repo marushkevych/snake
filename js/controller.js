@@ -1,13 +1,12 @@
 
-
 var canvas = document.getElementById("canvas");
-
-var score = 0;
-
 var playButton = document.getElementById("play");
 var pauseButton = document.getElementById("pause");
 var newGameButton = document.getElementById("new");
 var scoreElement = document.getElementById("score");
+
+var score = 0;
+var gameControl;
 
 // init game engine
 var gameEngine = require('./GameEngine');
@@ -114,7 +113,7 @@ var gameOverState = {
     }
 };
 
-var gameControl;
+
 setState(pausedState);
 
 function setState(state) {
@@ -129,7 +128,7 @@ playButton.addEventListener("click", function(){
 pauseButton.addEventListener("click", function(){
     gameControl.pause();
 }, false);
-newGameButton.addEventListener("click", function(e) {
+newGameButton.addEventListener("click", function() {
     gameControl.newGame();
     this.blur();
 }, false);
