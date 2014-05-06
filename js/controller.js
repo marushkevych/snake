@@ -1,11 +1,6 @@
-var grid = require('game-grid');
-var makeSnake = require('./Snake');
+
 
 var canvas = document.getElementById("canvas");
-var size = 35;
-var view = new grid.GridView(canvas, {size: size, scale: 12});
-var model = new grid.GridModel(size);
-
 
 var score = 0;
 
@@ -16,7 +11,7 @@ var scoreElement = document.getElementById("score");
 
 // init game engine
 var gameEngine = require('./GameEngine');
-gameEngine.init(canvas);
+gameEngine.init(canvas, 35);
 gameEngine.setFoodEatenEventListener(function(){
     scoreElement.innerHTML = ++score;
 });
@@ -39,7 +34,7 @@ var pausedState = {
     },
     play: function() {
         setState(playingState);
-        play();
+        gameEngine.play();
     },
     pause: function() {
 //        debugger;
@@ -47,12 +42,12 @@ var pausedState = {
     },
     newGame: function() {
         clear();
-        setUp();
+        gameEngine.setUp();
     },
     changeDirection: function(code) {
         // if not opposite
-        if (Math.abs(code - direction) != 2) {
-            direction = code;
+        if (Math.abs(code - gameEngine.direction) != 2) {
+            gameEngine.direction = code;
             this.play();
         }
         //do nothing
@@ -74,15 +69,15 @@ var playingState = {
     },
     pause: function() {
         setState(pausedState);
-        pause();
+        gameEngine.pause();
     },
     newGame: function() {
         this.pause();
         clear();
-        setUp();
+        gameEngine.setUp();
     },
     changeDirection: function(code) {
-        direction = code;
+        gameEngine.direction = code;
     }
 };
 var gameOverState = {
@@ -112,7 +107,7 @@ var gameOverState = {
     newGame: function() {
         setState(pausedState);
         clear();
-        setUp();
+        gameEngine.setUp();
     },
     changeDirection: function(code) {
         // do nothing
@@ -126,8 +121,6 @@ function setState(state) {
     gameControl = state;
     state.display();
 }
-
-// configure view
 
 
 playButton.addEventListener("click", function(){
@@ -166,8 +159,7 @@ function keydownEventHandler(e) {
 
 }
 
-view.paintBorder('black');
-setUp();
+
 
 function clear(){
     gameEngine.clear();
