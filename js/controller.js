@@ -92,7 +92,7 @@ var gameOverState = {
         var context = canvas.getContext("2d");
         context.font = "bold 50px sans-serif";
         context.fillStyle = 'white';
-        context.fillText("Game  Over   :(", 20, 200);
+        context.fillText("Game  Over", 30, 200);
         context.fillStyle = 'black';
         
         pauseButton.style.display = "none";
