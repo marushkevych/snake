@@ -72,7 +72,7 @@ exports.pause = function() {
 
 exports.clear = function() {
     var context = canvas.getContext("2d");
-    context.clearRect(20, 160, 400, 50);
+    context.clearRect(20, 160, 300, 50);
     snake = null;
     exports.direction = LEFT;
     model.eachCell(function(cell) {
