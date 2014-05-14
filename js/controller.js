@@ -8,6 +8,8 @@ var scoreElement = document.getElementById("score");
 var score = 0;
 var gameControl;
 
+var SwipeListener = require('./SwipeListener');
+
 // init game engine
 var gameEngine = require('./GameEngine');
 gameEngine.init(canvas, 35);
@@ -157,6 +159,25 @@ function keydownEventHandler(e) {
     gameControl.play();
 
 }
+
+// listen to swipes
+var swipeListener = new SwipeListener(canvas);
+swipeListener.on(SwipeListener.UP, function(){
+    console.log('swipe up')
+    gameControl.changeDirection(38);
+})
+swipeListener.on(SwipeListener.DOWN, function(){
+    console.log('swipe down')
+    gameControl.changeDirection(40);
+})
+swipeListener.on(SwipeListener.LEFT, function(){
+    console.log('swipe left')
+    gameControl.changeDirection(37);
+})
+swipeListener.on(SwipeListener.RIGHT, function(){
+    console.log('swipe right')
+    gameControl.changeDirection(39);
+})
 
 
 

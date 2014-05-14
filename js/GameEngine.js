@@ -48,7 +48,6 @@ exports.setUp = function() {
 exports.play = function() {
     intervalId = setInterval(tick, 80);
     var self = this;
-    debugger;
     function tick() {
         var next = getNextCell(snake.getHead(), self.direction);
         if (next == null || next.isSnake) {
