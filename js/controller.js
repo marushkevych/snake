@@ -12,7 +12,7 @@ var SwipeListener = require('./SwipeListener');
 
 // init game engine
 var gameEngine = require('./GameEngine');
-gameEngine.init(canvas, 35);
+gameEngine.init(canvas, 30);
 gameEngine.setFoodEatenEventListener(function(){
     scoreElement.innerHTML = ++score;
 });
