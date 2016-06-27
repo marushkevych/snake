@@ -3,3 +3,5 @@ deploy:
     server: shiva.vps-private.net
     username: u13094
     dir: '{home}/github/branch/{branch}'
+    scripts:
+      init: '{deploy_dir}/scripts/init.sh'
