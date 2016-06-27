@@ -2,4 +2,4 @@ deploy:
   branch:
     server: shiva.vps-private.net
     username: u13094
-    dir: '{home}/domains/u13094.shiva.vps-private.net'
+    dir: '{home}/github/branch/{branch}'
